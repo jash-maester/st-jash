@@ -84,6 +84,7 @@ void draw(void);
 void externalpipe(const Arg *);
 void kscrolldown(const Arg *);
 void kscrollup(const Arg *);
+static char *getcwd_by_pid(pid_t pid);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
@@ -114,6 +115,7 @@ size_t utf8encode(Rune, char *);
 void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
 char *xstrdup(char *);
+int  trt_kbdselect(KeySym, char *, int);
 
 /* config.h globals */
 extern char *utmp;

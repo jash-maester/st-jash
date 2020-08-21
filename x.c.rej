@@ -1,14 +1,11 @@
 --- x.c
 +++ x.c
-@@ -1099,10 +1087,10 @@ void
- xinit(int cols, int rows)
- {
- 	XGCValues gcvalues;
-+	Cursor cursor;
- 	Window parent;
- 	pid_t thispid = getpid();
- 	XColor xmousefg, xmousebg;
--	Pixmap blankpm;
+@@ -643,7 +643,7 @@ brelease(XEvent *e)
+ 		return;
+ 	}
  
- 	if (!(xw.dpy = XOpenDisplay(NULL)))
- 		die("can't open display\n");
+-	if (e->xbutton.button == Button2)
++	if (e->xbutton.button == Button3)
+ 		selpaste(NULL);
+ 	else if (e->xbutton.button == Button1)
+ 		mousesel(e, 1);
