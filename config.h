@@ -1,11 +1,12 @@
 /* See LICENSE file for copyright and license details. */
+#include<X11/keysym.h>
 
 /*
  * appearance
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "FiraCode Nerd Font:pixelsize=13:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
@@ -22,7 +23,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/sh";
+static char *shell = "/bin/zsh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
 char *scroll = NULL;
@@ -104,30 +105,60 @@ float alpha = 0.85;
 
 
 /* Terminal colors (16 first used in escape sequence) */
+
+// Dracula Colorscheme
+//static const char *colorname[] = {
+//  /* 8 normal colors */
+//  [0] = "#000000", /* black   */
+//  [1] = "#ff5555", /* red     */
+//  [2] = "#50fa7b", /* green   */
+//  [3] = "#f1fa8c", /* yellow  */
+//  [4] = "#bd93f9", /* blue    */
+//  [5] = "#ff79c6", /* magenta */
+//  [6] = "#8be9fd", /* cyan    */
+//  [7] = "#bbbbbb", /* white   */
+//
+//  /* 8 bright colors */
+//  [8]  = "#44475a", /* black   */
+//  [9]  = "#ff5555", /* red     */
+//  [10] = "#50fa7b", /* green   */
+//  [11] = "#f1fa8c", /* yellow  */
+// [12] = "#bd93f9", /* blue    */
+//  [13] = "#ff79c6", /* magenta */
+//  [14] = "#8be9fd", /* cyan    */
+//  [15] = "#ffffff", /* white   */
+//
+//  /* special colors */
+//  [256] = "#282a36", /* background */
+//  [257] = "#f8f8f2", /* foreground */
+//};
+
+// Nord Colorscheme
 static const char *colorname[] = {
   /* 8 normal colors */
-  [0] = "#000000", /* black   */
-  [1] = "#ff5555", /* red     */
-  [2] = "#50fa7b", /* green   */
-  [3] = "#f1fa8c", /* yellow  */
-  [4] = "#bd93f9", /* blue    */
-  [5] = "#ff79c6", /* magenta */
-  [6] = "#8be9fd", /* cyan    */
-  [7] = "#bbbbbb", /* white   */
+  [0] = "#3b4252", /* black   */
+  [1] = "#bf616a", /* red     */
+  [2] = "#a3be8c", /* green   */
+  [3] = "#ebcb8b", /* yellow  */
+  [4] = "#81a1c1", /* blue    */
+  [5] = "#b48ead", /* magenta */
+  [6] = "#88c0d0", /* cyan    */
+  [7] = "#e5e9f0", /* white   */
 
   /* 8 bright colors */
-  [8]  = "#44475a", /* black   */
-  [9]  = "#ff5555", /* red     */
-  [10] = "#50fa7b", /* green   */
-  [11] = "#f1fa8c", /* yellow  */
-  [12] = "#bd93f9", /* blue    */
-  [13] = "#ff79c6", /* magenta */
-  [14] = "#8be9fd", /* cyan    */
-  [15] = "#ffffff", /* white   */
+//  [8] = "#4c566a", /* black   */
+  [8] = "#adb3bf", /* black modified for highlights  */
+  [9] = "#bf616a", /* red     */
+  [10] = "#a3be8c", /* green   */
+  [11] = "#ebcb8b", /* yellow  */
+  [12] = "#81a1c1", /* blue    */
+  [13] = "#b48ead", /* magenta */
+  [14] = "#8fbcbb", /* cyan    */
+  [15] = "#eceff4", /* white   */
 
   /* special colors */
-  [256] = "#282a36", /* background */
-  [257] = "#f8f8f2", /* foreground */
+  [256] = "#2e3440", /* background */
+  [257] = "#d8dee9", /* foreground */
 };
 
 
@@ -135,13 +166,19 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-//unsigned int defaultfg = 7;
-//unsigned int defaultbg = 258;
-//static unsigned int defaultcs = 256;
+
+// Dracula Colorscheme
+//unsigned int defaultfg = 257;
+//unsigned int defaultbg = 256;
+//static unsigned int defaultcs = 257;
+//static unsigned int defaultrcs = 257;
+
+// Nord Colorscheme
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
 static unsigned int defaultcs = 257;
-static unsigned int defaultrcs = 257;
+static unsigned int defaultrcs = 256;
+
 
 /*
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
@@ -157,7 +194,8 @@ unsigned int defaultunderline = 7;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 3;
+//static unsigned int cursorshape = 3;
+static unsigned int cursorshape = 6;
 
 /*
  * Default columns and rows numbers
@@ -209,9 +247,9 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+	{ MODKEY,               XK_KP_Add,      zoom,           {.f = +1} },
+	{ MODKEY,               XK_KP_Subtract, zoom,           {.f = -1} },
+	{ MODKEY,               XK_0,           zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
@@ -219,8 +257,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
         { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
         //{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,               XK_Up,          kscrollup,      {.i = -1} },
+	{ MODKEY,               XK_Down,        kscrolldown,    {.i = -1} },
 };
 
 /*
@@ -299,7 +337,7 @@ static Key key[] = {
 	{ XK_KP_Delete,     ShiftMask,      "\033[2K",      -1,    0},
 	{ XK_KP_Delete,     ShiftMask,      "\033[3;2~",    +1,    0},
 	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[P",       -1,    0},
-	{ XK_KP_Delete,     XK_ANY_MOD,     "\177",      +1,    0},
+	{ XK_KP_Delete,     XK_ANY_MOD,     "\177",         +1,    0},
 	{ XK_KP_Multiply,   XK_ANY_MOD,     "\033Oj",       +2,    0},
 	{ XK_KP_Add,        XK_ANY_MOD,     "\033Ok",       +2,    0},
 	{ XK_KP_Enter,      XK_ANY_MOD,     "\033OM",       +2,    0},
@@ -367,7 +405,7 @@ static Key key[] = {
 	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0},
 	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0},
 	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0},
-	{ XK_Delete,        XK_ANY_MOD,     "\177",      +1,    0},
+	{ XK_Delete,        XK_ANY_MOD,     "\177",         +1,    0},
 	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},
 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1},
 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1},
