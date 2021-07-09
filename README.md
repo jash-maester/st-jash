@@ -20,6 +20,11 @@ mkdir -p ~/.fonts
 cp fonts/* -r ~/.fonts/
 ```
 
+Add the following to `.zshrc`:
+```bash
+bindkey '\e[3~' delete-char
+```
+
 ## Installation
 ------------
 Edit config.mk to match your local setup (st is installed into
