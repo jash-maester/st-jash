@@ -10,7 +10,15 @@ st is a simple terminal emulator for X which sucks less.
 ## Requirements
 ------------
 In order to build st you need the Xlib header files.
+### Ubuntu
 
+  - libx11-dev
+  - libxft-dev
+
+```bash
+mkdir -p ~/.fonts
+cp fonts/* -r ~/.fonts/
+```
 
 ## Installation
 ------------
