@@ -28,7 +28,7 @@ bindkey '\e[3~' delete-char
 ## Installation
 ------------
 Edit config.mk to match your local setup (st is installed into
-the /usr/local namespace by default).
+the /usr/local/bin by default).
 
 ```
     sudo make clean install
