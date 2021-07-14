@@ -232,11 +232,15 @@ static uint forcemousemod = ShiftMask;
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-    	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+	// Changed from XK_ANY_MOD to XK_ANY_MOD
+    { XK_NO_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
+	{ XK_NO_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
+	{ XK_NO_MOD,           Button2, clippaste,       {.i = 0},      1 },
+	{ XK_NO_MOD,           Button4, ttysend,        {.s = "\031"} },
+	{ XK_NO_MOD,           Button5, ttysend,        {.s = "\005"} },
+	{ ControlMask,          Button4, zoom,        	 {.f = +1} },    // Zoom +
+	{ ControlMask,          Button5, zoom,        	 {.f = -1} }, 	 // Zoom -
+	{ ControlMask,          Button2, zoomreset,      {.f =  0} }, 	 // Zoom Reset
 };
 
 /* Internal keyboard shortcuts. */
@@ -249,18 +253,20 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY,               XK_KP_Add,      zoom,           {.f = +1} },
-	{ MODKEY,               XK_KP_Subtract, zoom,           {.f = -1} },
+    { MODKEY,               XK_equal,       zoom,           {.f = +1} },
+	{ MODKEY,               XK_minus,       zoom,           {.f = -1} },
 	{ MODKEY,               XK_0,           zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_Y,           clippaste,       {.i =  0} },
+	{ ShiftMask,            XK_Insert,      clippaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-        { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
-        //{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
-	{ MODKEY,               XK_Up,          kscrollup,      {.i = -1} },
-	{ MODKEY,               XK_Down,        kscrolldown,    {.i = -1} },
+    { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
+    //{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
+	{ MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
+	{ MODKEY,               XK_k,          	kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_j,        	kscrolldown,    {.i =  1} },
 };
 
 /*
@@ -407,9 +413,8 @@ static Key key[] = {
 	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0},
 	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0},
 	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0},
-	//{ XK_Delete,        XK_ANY_MOD,     "\033[C\010",   +1,    0}, // hacky hack Delete
-	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",   +1,    0}, // hacky hack Delete
-	{ XK_BackSpace,     Mod1Mask,       "\010",      0,    0},
+	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",   	+1,    0},
+	{ XK_BackSpace,     Mod1Mask,       "\010",      	 0,    0},
 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1},
 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1},
 	{ XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1},
