@@ -233,11 +233,11 @@ static uint forcemousemod = ShiftMask;
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
 	// Changed from XK_ANY_MOD to XK_ANY_MOD
-    { XK_NO_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
-	{ XK_NO_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
-	{ XK_NO_MOD,           Button2, clippaste,       {.i = 0},      1 },
-	{ XK_NO_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ XK_NO_MOD,           Button5, ttysend,        {.s = "\005"} },
+    { XK_NO_MOD,            Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
+	{ XK_NO_MOD,            Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
+	{ XK_NO_MOD,            Button2, clippaste,      {.i = 0},      1 },
+	{ XK_NO_MOD,            Button4, ttysend,        {.s = "\031"} },
+	{ XK_NO_MOD,            Button5, ttysend,        {.s = "\005"} },
 	{ ControlMask,          Button4, zoom,        	 {.f = +1} },    // Zoom +
 	{ ControlMask,          Button5, zoom,        	 {.f = -1} }, 	 // Zoom -
 	{ ControlMask,          Button2, zoomreset,      {.f =  0} }, 	 // Zoom Reset
@@ -246,6 +246,9 @@ static MouseShortcut mshortcuts[] = {
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
+
+// Defined Shell Commands
+static char *openurlcmd[] = { "/bin/sh", "-c", "linkgrabber.sh", NULL};
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -258,12 +261,13 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_0,           zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           clippaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      clippaste,       {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-    { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
-    //{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
-	{ MODKEY,               XK_l,           copyurl,        {.i =  0} },
+	{ TERMMOD,              XK_Y,           clippaste,      {.i =  0} },
+	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
+//    { TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+//    { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
+//    { TERMMOD,              XK_Return,      newterm,        {.i =  0} },
+//	  { MODKEY,               XK_l,           copyurl,        {.i =  0} },
+	{ MODKEY,               XK_l,           externalpipe,   {.v =  openurlcmd} },
 	{ MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
 	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
 	{ MODKEY,               XK_k,          	kscrollup,      {.i =  1} },
@@ -271,6 +275,7 @@ static Shortcut shortcuts[] = {
 };
 
 /*
+ * WARNING: DO NOT CHANGE THESE !!! Unless you do know what you are doing
  * Special keys (change & recompile st.info accordingly)
  *
  * Mask value:
