@@ -135,6 +135,17 @@ float alpha = 0.87;
 //  [257] = "#f8f8f2", /* foreground */
 //};
 
+///*
+// * colors (colorname index)
+// * foreground, background, cursor, reverse cursor
+// */
+
+//// Dracula Colorscheme
+//unsigned int defaultfg = 257;
+//unsigned int defaultbg = 256;
+//static unsigned int defaultcs = 257;
+//static unsigned int defaultrcs = 257;
+
 // Nord Colorscheme
 static const char *colorname[] = {
   /* 8 normal colors */
@@ -165,15 +176,9 @@ static const char *colorname[] = {
 
 
 /*
- * Default colors (colorname index)
+ * colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-
-// Dracula Colorscheme
-//unsigned int defaultfg = 257;
-//unsigned int defaultbg = 256;
-//static unsigned int defaultcs = 257;
-//static unsigned int defaultrcs = 257;
 
 // Nord Colorscheme
 unsigned int defaultfg = 257;
@@ -189,6 +194,7 @@ static unsigned int defaultrcs = 256;
  */
 unsigned int defaultitalic = 7;
 unsigned int defaultunderline = 7;
+
 /*
  * Default shape of cursor
  * 2: Block ("█")
@@ -196,7 +202,7 @@ unsigned int defaultunderline = 7;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-//static unsigned int cursorshape = 3;
+
 static unsigned int cursorshape = 2;
 
 /*
@@ -266,7 +272,6 @@ static Shortcut shortcuts[] = {
 //    { TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 //    { TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
 //    { TERMMOD,              XK_Return,      newterm,        {.i =  0} },
-//	  { MODKEY,               XK_l,           copyurl,        {.i =  0} },
 	{ MODKEY,               XK_l,           externalpipe,   {.v =  openurlcmd} },
 	{ MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
 	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
@@ -275,7 +280,7 @@ static Shortcut shortcuts[] = {
 };
 
 /*
- * WARNING: DO NOT CHANGE THESE !!! Unless you do know what you are doing
+ * WARNING: DO NOT CHANGE THESE !!! Unless you know what you are doing
  * Special keys (change & recompile st.info accordingly)
  *
  * Mask value:
